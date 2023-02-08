@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" charset="utf-8"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">
+</head>
+
+<body>
+    <header>
+        <div class="inner-width">
+            <h1 class="logo">CRE<span style="color:#273b91;">VI</span>GO</h1>
+            <i class="menu-toggle-btn fas fa-bars"></i>
+            <nav class="navigation-menu">
+                <a href="#"><i class="fas fa-home home"></i> Inicio</a>
+                <div class="dropdown">
+                    <a href="#">Asistencia</a>
+                    <div class="dropdown-content">
+                        <a data-toggle="modal" data-target="#exampleModal"  class="a-dt" href="#">Marcar Nueva</a>
+                        <a class="a-dt" href="#">Ver todas</a>
+                    </div>
+                </div>
+                <a href="#"> Salario</a>
+                <div style="position: relative; left: 25%;">
+                    <a href="#Micuenta"><i class="fa fa-user"></i> {{ user.first_name }} {{user.last_name}}</a>
+                    <a href="{% url 'logout' %}">Cerrar Sesion</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+    <script src="script.js"></script>
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Registrar una nueva asistencia</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="container-turno" style="display: flex; justify-content: space-around;">
+                        <div>
+                            <spam>Turno manana</spam>
+                            <button> 7h00 am a 19h00 pm</button>
+                        </div>
+                        <div>
+                            <spam>Turno noche</spam>
+                            <button> 19h00 pm a 7h00 am</button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        <div class="contenedor">
+<div class="card" style="width: 400px; height: 480px; margin-left: 45px;display: flex; align-items: center">
+  <img src="{{user.profile.imageProfile.url}}" class="img-thumbnail" style="border-radius: 50%; width:100px; margin-top: 10px; margin-bottom: -35px" />
+  <div class="card-body">
+  </div>
+    <h6> {{user.first_name}} {{user.last_name}} </h6>
+  <ul class="list-group list-group-flush" style="font-size: 14px; padding: 5px;" >
+    <li class="list-group-item">Telefono: {{user.profile.phoneNumber}}</li>
+    <li class="list-group-item">Empleado desde: {{user.profile.fechaIngreso}}</li>
+    <li class="list-group-item">Departamento: {{user.profile.departamento}}</li>
+    {% if user.profile.estado == True %}
+    <li class="list-group-item">Estado: <spam style="color: green"> Activo </spam>
+    {% else %}
+    <li class="list-group-item">Estado: <spam style="color: red"> Libre </spam>
+    {% endif%}
+    <li class="list-group-item">Direccion: {{user.profile.direcion}}</li>
+
+  </ul>
+  <div class="card-body">
+<button type="button" class="btn btn-success">Editar</button>
+  </div>
+
+</div>
+
+
+  <div class="container">
+        <div class="row">
+                <div class="col-lg-12" style="display:flex; justify-content: center;">
+                    <div class="table-responsive" style="width: 750px;" >
+                        <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                        <thead>
+                            <tr style=" height:10px; background-color: #0e3057; color: white; font-size: 14px;">
+                                <th>Fecha</th>
+                                <th>Turno</th>
+                                <th>Hora Inicio</th>
+                                <th>Hora Fin</th>
+                                <th>Total Horas</th>
+                            </tr>
+                        </thead>
+                        <tbody class="trStyleColum">
+                            {% for item in attendences %}
+                            <tr style="height:10px">
+                                <td>{{item.fecha}}</td>
+                                <td>{{item.turno}}</td>
+                                <td>{{item.horaInicio}}</td>
+                                <td>{{item.horaFin}}</td>
+                                <td>{{item.totalHoras}}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                       </table>
+                    </div>
+                </div>
+        </div>
+    </div>
+
+             <!-- jQuery, Popper.js, Bootstrap JS -->
+    <script src= "{% static 'js/jquery/jquery-3.3.1.min.js' %}"></script>
+    <script src="{% static 'js/popper/popper.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap/js/bootstrap.min.js' %}"></script>
+
+    <!-- datatables JS -->
+    <script type="text/javascript" src="{% static 'js/datatables/datatables.min.js' %}"></script>
+
+    <!-- para usar botones en datatables JS -->
+    <script src="{% static 'js/datatables/Buttons-1.5.6/js/dataTables.buttons.min.js' %}"></script>
+    <script src="{% static 'js/datatables/JSZip-2.5.0/jszip.min.js' %}"></script>
+    <script src="{% static 'js/datatables/pdfmake-0.1.36/pdfmake.min.js' %}"></script>
+    <script src="{% static 'js/datatables/pdfmake-0.1.36/vfs_fonts.js' %}"></script>
+    <script src="{% static 'js/datatables/Buttons-1.5.6/js/buttons.html5.min.js' %}"></script>
+
+    <!-- código JS propìo-->
+    <script type="text/javascript" src="{% static 'js/main.js' %}"></script>
+
+</body>
+
+</html>

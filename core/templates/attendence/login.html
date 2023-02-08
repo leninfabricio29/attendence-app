@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+</head>
+<body>
+    <div class="parent">
+         {% for message in messages %}
+<div style="background-color: rgb(255, 238, 221); border: 1px dotted #BB0000;color: #BB0000; padding-left: 60px; height: 50px; display: flex;"> 
+                            <spam style="color: red; font-size:14px; margin-right: 55px;margin-top: 20px;" > {{message}}</spam>
+
+       </div>
+                {%endfor%}
+      	<div class="container-fluid">
+		<div class="row main-content bg-success text-center">
+			<div class="col-md-4 text-center company__info" style="width: 450px">
+				<span class="company__logo"><h2><span class="fa fa-android"></span></h2></span>
+				<div style="margin-left: 35px;">
+					            <h1 class="logo">CRE<span style="color:#273b91;">VI</span>GO</h1>
+
+				</div>
+			</div>
+			<div class="col-md-8 col-xs-12 col-sm-12 login_form ">
+				<div class="container-fluid">
+					<div class="row">
+						<h2 style="margin-left: 50px;"> Iniciar Sesion </h2>
+					</div>
+					<div class="row">
+						<form  class="form-group" method="POST">
+							{% csrf_token %}
+							<div class="row">
+								<input type="text" required name="uname" id="username" class="form__input" placeholder="Username">
+							</div>
+							<div class="row">
+								<!-- <span class="fa fa-lock"></span> -->
+								<input type="password" required name="pass" id="password" class="form__input" placeholder="Password">
+							</div>
+							<div class="row">
+								<button class="btn-login"> Iniciar Sesion</button>
+							</div>
+						</form>
+					</div>
+					<div class="row-footer" style="margin-left: 25px;">
+						<p>Aun no tienes una cuenta? <a href="{% url 'register-page' %}" style="margin-left: 30px; text-decoration:none;">Registrate aqui</a></p>
+					</div>
+				</div>
+			</div>
+			
+		</div>
+	</div>
+        </div>
+    </body>
+</html>

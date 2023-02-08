@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+<body>
+    <div class="parent">  
+            <form class="form" action="" method='POST'>
+                <h1>Registrate </h1>
+
+                {% csrf_token %}
+                <label for="fname">Nombre:</label>
+                <input type="text" placeholder="Enter your first name" name='fname'><br>
+
+                <label for="fname">Apellido:</label>
+                <input type="text" placeholder="Enter your last name" name='sname'><br>
+
+                <label for="fname">Username:</label>
+                <input type="text" placeholder="Create a username" name='uname'><br>
+                {% for message in messages %}
+                     <spam style="color: red; font-size:10px; margin-right: 185px; margin-bottom: 10px;" > {{message}}</spam>
+                {% endfor%}  
+
+                <label for="fname">Email:</label>
+                <input type="email" placeholder="Enter your email" name='email'><br>
+
+                <label for="fname">Clave:</label>
+                <input type="password" placeholder="Create a password" name='pass'><br>
+                
+                <button type="submit">Registrarse</button>
+
+                <p>Ya tienes una cuenta? <a href="{% url 'home-page' %}">Inicar sesion</a></p>    
+            </form>
+    </div>
+</body>
+</html>
