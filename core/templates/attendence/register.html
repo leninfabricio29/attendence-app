@@ -6,37 +6,76 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     {% load static %}
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 <body>
-    <div class="parent">  
-            <form class="form" action="" method='POST'>
-                <h1>Registrate </h1>
+    <div class="parent">
+         {% for message in messages %}
+<div style="background-color: rgb(255, 238, 221); border: 1px dotted #BB0000;color: #BB0000; padding-left: 60px; height: 50px; display: flex;">
+                            <spam style="color: red; font-size:14px; margin-right: 55px;margin-top: 20px;" > {{message}}</spam>
 
-                {% csrf_token %}
-                <label for="fname">Nombre:</label>
-                <input type="text" placeholder="Enter your first name" name='fname'><br>
+       </div>
+                {%endfor%}
+      	<div class="container-fluid">
+		<div class="row main-content bg-success text-center">
+			<div class="col-md-4 text-center company__info" style="width: 450px">
+				<span class="company__logo"><h2><span class="fa fa-android"></span></h2></span>
+				<div style="margin-left: 35px;">
+					            <h1 class="logo">CRE<span style="color:#273b91;">VI</span>GO</h1>
 
-                <label for="fname">Apellido:</label>
-                <input type="text" placeholder="Enter your last name" name='sname'><br>
+				</div>
+			</div>
+			<div class="col-md-8 col-xs-12 col-sm-12 login_form ">
+				<div class="container-fluid">
+					<div class="row">
+						<h2 style="margin-left: 50px;"> Registrate </h2>
+					</div>
+					<div class="row">
+						<form  class="form-group" method="POST">
+							{% csrf_token %}
+                            <div class="row">
+								<input type="text" required name="fname"  class="form__input" placeholder="Ingresa tu nombre">
+							</div>
+                            <div class="row">
+								<input type="text" required name="uname"  class="form__input" placeholder="Ingresa tu apellido">
+							</div>
+                            <div class="row">
+								<input type="text" required name="sname"  class="form__input" placeholder="Ingresa un username">
+							</div>
+							<div class="row">
+								<input type="email" required name="email"  class="form__input" placeholder="Ingresa tu correo electronico">
+							</div>
+							<div class="row">
+								<input type="password" required name="pass"  class="form__input" placeholder="Ingresa tu clave">
+							</div>
+							<div class="row">
+								<button class="btn-login"> Registrate</button>
+							</div>
+						</form>
+					</div>
+					<div class="row-footer" style="margin-left: 25px;">
+						<p>Ya tienes una cuenta? <a href="{% url 'home-page' %}" style="margin-left: 30px; text-decoration:none;">Inicia Sesion aqui</a></p>
+					</div>
+				</div>
+			</div>
 
-                <label for="fname">Username:</label>
-                <input type="text" placeholder="Create a username" name='uname'><br>
-                {% for message in messages %}
-                     <spam style="color: red; font-size:10px; margin-right: 185px; margin-bottom: 10px;" > {{message}}</spam>
-                {% endfor%}  
+		</div>
+	</div>
+        </div>
+        </div>
 
-                <label for="fname">Email:</label>
-                <input type="email" placeholder="Enter your email" name='email'><br>
-
-                <label for="fname">Clave:</label>
-                <input type="password" placeholder="Create a password" name='pass'><br>
-                
-                <button type="submit">Registrarse</button>
-
-                <p>Ya tienes una cuenta? <a href="{% url 'home-page' %}">Inicar sesion</a></p>    
-            </form>
-    </div>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+

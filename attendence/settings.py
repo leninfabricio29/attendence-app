@@ -26,9 +26,11 @@ SECRET_KEY = 'django-insecure-1*u2+x7$8ye!@j8*v)cij3c&be!k9#0+d6xuue6v&@-fr=8&nk
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
-
+#Captcha
+RECAPTCHA_PRIVATE_KEY = '6LeLrGgkAAAAAAI100Q9WbsdmMytsyNvX1iiE-2c'
+RECAPTCHA_PUBLIC_KEY = '6LeLrGgkAAAAAAI100Q9WbsdmMytsyNvX1iiE-2c'
 # Application definition
 
 INSTALLED_APPS = [
@@ -39,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'core',
+    'captcha'
 ]
 
 MIDDLEWARE = [
@@ -77,8 +80,12 @@ WSGI_APPLICATION = 'attendence.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'bdattendance',
+        'USER': 'postgres',
+        'PASSWORD': 'root1234',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 

@@ -1,19 +1,19 @@
 from django.shortcuts import render
 from django.contrib import messages
 # Create your views here.
-from .forms import LoginForm
-from django.http import HttpResponseRedirect
+from .forms import Myform
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from .models import  Attendence, Profile
+from .models import  Attendence
 
 
 @login_required
 def ConsolePage(request):
     userLogged=request.user.id
-    list_attendence=Attendence.objects.filter(attendenceProfile=userLogged).values()
+    list_attendence=Attendence.objects.all()
+    print(list_attendence)
     contexto = {
         'attendences': list_attendence
     }
@@ -24,19 +24,22 @@ def WelcomePage(request):
     return render (request, 'attendence/welcome.html')
 
 def HomePage(request):
+    form = Myform(request.POST)
     if request.method == 'POST':
         name = request.POST.get('uname')
         password = request.POST.get('pass')
-
-        
-
         user = authenticate(request, username=name, password=password)
-        if user is not None:
-            login(request, user)
-            return redirect('console-page')
+        if form.is_valid():
+            form = Myform()
+            if user is not None:
+                login(request, user)
+                return redirect('console-page')
+            else:
+                messages.error(request, 'Error, credenciales inválidas')
         else:
-            messages.error(request,'Error, credenciales inválidas')
-    return render(request, 'attendence/login.html', {})
+            messages.error(request, 'Captcha Fallido, vuelve a repetir')
+
+    return render(request, 'attendence/login.html', {'form':form})
 
 def Register(request):
     if request.method == 'POST':
@@ -53,7 +56,8 @@ def Register(request):
             for ale in list_Users:
                 if ale.username == name:
                     messages.error(request,'Error, ya existe este username')
-                    return render(request,'attendence/register.html',{})
+                    #Se borro llaves.
+                    return render(request,'attendence/register.html')
                 else:
                     print("Registro exitoso de "+name)
                     new_user = User.objects.create_user(name, email, password)
@@ -73,3 +77,5 @@ def logoutuser(request):
 
 
 
+def error_404_view(request,exception):
+    return render(request,'attendence/404_error.html')
